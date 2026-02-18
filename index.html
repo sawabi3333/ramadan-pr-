@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رحلة ولاء الأسطورية 🌙</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#240046">
+
+<style>
+body{
+margin:0;
+font-family:'Tahoma';
+background:linear-gradient(135deg,#10002b,#240046,#3c096c);
+color:white;
+text-align:center;
+}
+
+/* أنيميشن خلفية */
+body::before{
+content:"";
+position:fixed;
+width:200%;
+height:200%;
+background:radial-gradient(circle,rgba(255,255,255,0.05) 1px,transparent 1px);
+background-size:50px 50px;
+animation:move 30s linear infinite;
+z-index:-1;
+}
+@keyframes move{
+from{transform:translate(0,0);}
+to{transform:translate(-50px,-50px);}
+}
+
+header{padding:20px;}
+
+button{
+padding:10px 20px;
+border:none;
+border-radius:8px;
+background:#c77dff;
+color:white;
+cursor:pointer;
+}
+button:hover{background:#9d4edd;}
+
+.progress{
+width:80%;
+background:#333;
+margin:20px auto;
+border-radius:10px;
+}
+.bar{
+height:20px;
+width:0%;
+background:#c77dff;
+border-radius:10px;
+transition:1s;
+}
+
+.badge{
+margin:10px;
+font-size:18px;
+color:gold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🌙 رمضان كريم يا ولاء 💜</h1>
+<div id="countdown"></div>
+</header>
+
+<h3>نظام النقاط الأسطوري</h3>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<div class="badge" id="badge"></div>
+
+<button onclick="addPoints()">إضافة 10 نقاط تجربة</button>
+<button onclick="notify()">تفعيل تذكير يومي</button>
+
+<script>
+
+// تسجيل Service Worker
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('service-worker.js');
+}
+
+// عداد رمضان 2026
+let ramadanDate=new Date("March 1, 2026 00:00:00").getTime();
+setInterval(()=>{
+let now=new Date().getTime();
+let diff=ramadanDate-now;
+if(diff>0){
+let d=Math.floor(diff/(1000*60*60*24));
+countdown.innerHTML="متبقي على رمضان: "+d+" يوم";
+}else{
+countdown.innerHTML="رمضان مبارك 💜";
+}
+},1000);
+
+let points=localStorage.getItem("points")||0;
+update();
+
+function addPoints(){
+points=parseInt(points)+10;
+localStorage.setItem("points",points);
+update();
+}
+
+function update(){
+let percent=Math.min(points/1000*100,100);
+bar.style.width=percent+"%";
+
+let level="🌱 مبتدئة";
+if(points>200) level="🥉 برونزي";
+if(points>400) level="🥈 فضي";
+if(points>700) level="🥇 ذهبي";
+if(points>=1000) level="👑 ملكة رمضان";
+
+badge.innerHTML="النقاط: "+points+" | المستوى: "+level;
+}
+
+// إشعارات
+function notify(){
+if(Notification.permission!=="granted"){
+Notification.requestPermission();
+}else{
+new Notification("🌙 تذكير يا ولاء",{
+body:"متنسيش ورد القرآن النهارده 💜",
+icon:"https://cdn-icons-png.flaticon.com/512/833/833314.png"
+});
+}
+}
+
+</script>
+
+</body>
+</html>
