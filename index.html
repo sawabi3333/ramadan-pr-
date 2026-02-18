@@ -3,253 +3,201 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>رمضان كريم ولاء 💜</title>
+<title>أذكار الصباح والمساء</title>
+
 <style>
-body{margin:0;font-family:'Tahoma';background:linear-gradient(135deg,#2d026e,#5a189a,#9d4edd);color:white;}
-nav{background:#7b2cbf;padding:10px;position:fixed;width:100%;top:0;z-index:100;display:flex;justify-content:center;}
-nav a{color:white;margin:0 15px;text-decoration:none;font-weight:bold;}
-nav a:hover{color:#c77dff;}
-section{padding:100px 20px;min-height:100vh;text-align:center;}
-h2{font-size:30px;margin-bottom:20px;}
-button{padding:10px 20px;border:none;border-radius:10px;background:#9d4edd;color:white;cursor:pointer;transition:0.3s;}
-button:hover{transform:scale(1.05);background:#c77dff;}
-.stars{position:fixed;width:100%;height:100%;overflow:hidden;z-index:-2;}
-.star{position:absolute;width:2px;height:2px;background:#d9a1ff;border-radius:50%;animation: twinkle 3s infinite alternate;}
-@keyframes twinkle{0%{opacity:0.2;}50%{opacity:1;}100%{opacity:0.2;}}
-.moon{position:fixed;top:50px;left:50px;width:120px;height:120px;background:#c77dff;border-radius:50%;box-shadow:-30px 0 0 0 #5a189a;animation: float 6s ease-in-out infinite;z-index:-1;}
-@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(20px);}}
-table{margin:20px auto;border-collapse:collapse;font-size:18px;}
-th,td{padding:10px;border:1px solid #c77dff;}
-ul{list-style:none;padding:0;text-align:right;}
-li{margin:10px 0;font-size:18px;}
-.sura-list a{color:white;text-decoration:none;}
-.sura-list a:hover{color:#c77dff;}
-#verseContent{background:#5a189a;padding:15px;border-radius:10px;margin-top:20px;display:none;}
-#verseContent h3{margin-top:0;color:#ffd700;}
-#verseList p{margin:8px 0;}
-.task{margin:10px;}
-.progress-container{width:80%;background:#5a189a;margin:20px auto;border-radius:10px;overflow:hidden;}
-.progress-bar{height:20px;width:0%;background:linear-gradient(90deg,#c77dff,#9d4edd);border-radius:10px;transition:1s;}
-.certificate{display:none;margin:20px auto;padding:20px;background:#9d4edd;color:white;width:320px;border-radius:15px;box-shadow:0 0 20px rgba(255,255,255,0.3);}
-.azkar-list li{margin-bottom:10px;}
+body{
+    font-family: Tahoma;
+    background: linear-gradient(to bottom,#0f2027,#203a43,#2c5364);
+    color:white;
+    margin:0;
+    padding:20px;
+    line-height:1.9;
+}
+h1{
+    text-align:center;
+}
+.buttons{
+    text-align:center;
+    margin-bottom:20px;
+}
+button{
+    padding:10px 15px;
+    margin:5px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#f9a826;
+    font-weight:bold;
+}
+button:hover{
+    background:#ffcc70;
+}
+.zekr{
+    background:rgba(255,255,255,0.1);
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+.counter{
+    margin-top:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.count-number{
+    font-size:18px;
+    font-weight:bold;
+    color:#ffcc70;
+}
+.done{
+    color:#00ff9d;
+    font-weight:bold;
+}
 </style>
 </head>
 <body>
 
-<div class="stars" id="stars"></div>
-<div class="moon"></div>
+<h1>📿 أذكار الصباح والمساء</h1>
 
-<nav>
-<a href="#welcome">الرئيسية</a>
-<a href="#prayer">مواقيت الصلاة</a>
-<a href="#azkar">الأذكار</a>
-<a href="#quran">القرآن الكريم</a>
-<a href="#tasks">مهام رمضان</a>
-</nav>
-
-<section id="welcome">
-<h2>رمضان كريم 💜</h2>
-<p>أهلاً يا ولاء، نتمنى لكِ رمضان مبارك 🌙✨</p>
-<button onclick="location.href='#prayer'">ابدئي رحلتك الرمضانية</button>
-</section>
-
-<section id="prayer">
-<h2>مواقيت الصلاة - القاهرة</h2>
-<table>
-<tr><th>الصلاة</th><th>الوقت</th></tr>
-<tr><td>الفجر</td><td>04:30</td></tr>
-<tr><td>الظهر</td><td>12:15</td></tr>
-<tr><td>العصر</td><td>15:45</td></tr>
-<tr><td>المغرب</td><td>18:30</td></tr>
-<tr><td>العشاء</td><td>20:00</td></tr>
-</table>
-</section>
-
-<section id="azkar">
-<h2>الأذكار من حصن المسلم 💜</h2>
-<h3>أذكار الصباح</h3>
-<ul class="azkar-list" id="morning"></ul>
-<h3>أذكار المساء</h3>
-<ul class="azkar-list" id="evening"></ul>
-<h3>أذكار بعد الصلاة</h3>
-<ul class="azkar-list" id="afterPrayer"></ul>
-<h3>أذكار قبل النوم</h3>
-<ul class="azkar-list" id="beforeSleep"></ul>
-<h3>أذكار عند الاستيقاظ</h3>
-<ul class="azkar-list" id="uponWaking"></ul>
-<h3>أذكار الوضوء</h3>
-<ul class="azkar-list" id="ablution"></ul>
-<h3>أذكار دخول وخروج المنزل</h3>
-<ul class="azkar-list" id="home"></ul>
-</section>
-
-<section id="quran">
-<h2>القرآن الكريم 💜</h2>
-<p>اختاري سورة لعرض الآيات:</p>
-<ul class="sura-list" id="suraList"></ul>
-<div id="verseContent">
-<h3 id="suraTitle"></h3>
-<div id="verseList"></div>
+<div class="buttons">
+<button onclick="loadAzkar('morning')">أذكار الصباح</button>
+<button onclick="loadAzkar('evening')">أذكار المساء</button>
+<button onclick="resetAll()">إعادة تعيين الكل</button>
 </div>
-</section>
 
-<section id="tasks">
-<h2>مهام رمضان اليومية ✅</h2>
-<div class="task"><label><input type="checkbox" id="fasting"> صيام</label></div>
-<div class="task"><label><input type="checkbox" id="prayerTask"> صلاة</label></div>
-<div class="task"><label><input type="checkbox" id="quranTask"> قراءة قرآن</label></div>
-<div class="task"><label><input type="checkbox" id="charityTask"> صدقة</label></div>
-<div class="task"><label><input type="checkbox" id="azkarTask"> أذكار</label></div>
-<button onclick="saveTasks()">حفظ ✅</button>
-<div class="progress-container">
-<div class="progress-bar" id="progressBar"></div>
-</div>
-<div class="certificate" id="certificate">
-<h3>🏆 تهانينا يا ولاء 💜</h3>
-<p>لقد أتممت جميع مهام رمضان اليومية!</p>
-</div>
-</section>
+<div id="content"></div>
 
 <script>
-// نجوم عشوائية
-for(let i=0;i<100;i++){
-let star=document.createElement("div");
-star.className="star";
-star.style.top=Math.random()*100+"%";
-star.style.left=Math.random()*100+"%";
-star.style.animationDelay=Math.random()*3+"s";
-document.getElementById("stars").appendChild(star);
-}
 
-// الأذكار كلها داخل الكود
-const azkarData={
-"morning":[
-"أصبحنا وأصبح الملك لله",
-"اللهم ما أصبح بي من نعمة أو بأحد من خلقك فمنك وحدك لا شريك لك",
-"رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا",
-"سبحان الله وبحمده سبحان الله العظيم",
-"اللهم إني أسألك خير ما في هذا اليوم وخير ما بعده وأعوذ بك من شر هذا اليوم وشر ما بعده",
-"أستغفر الله وأتوب إليه ثلاث مرات",
-"اللهم أعوذ بك من الكسل وسوء الكبر وشر الدنيا وشر الشيطان"
+const azkarData = {
+morning: [
+{
+text:`آية الكرسي:
+اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ وَلَا يَئُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ`,
+count:1
+},
+{
+text:`قُلْ هُوَ اللَّهُ أَحَدٌ اللَّهُ الصَّمَدُ لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ
+(3 مرات)`,
+count:3
+},
+{
+text:`قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ مِن شَرِّ مَا خَلَقَ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ
+(3 مرات)`,
+count:3
+},
+{
+text:`قُلْ أَعُوذُ بِرَبِّ النَّاسِ مَلِكِ النَّاسِ إِلَٰهِ النَّاسِ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ مِنَ الْجِنَّةِ وَالنَّاسِ
+(3 مرات)`,
+count:3
+},
+{
+text:`أصبحنا وأصبح الملك لله والحمد لله لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شيء قدير رب أسألك خير ما في هذا اليوم وخير ما بعده وأعوذ بك من شر ما في هذا اليوم وشر ما بعده رب أعوذ بك من الكسل وسوء الكبر رب أعوذ بك من عذاب في النار وعذاب في القبر`,
+count:1
+},
+{
+text:`رضيت بالله رباً وبالإسلام ديناً وبمحمد ﷺ نبياً`,
+count:3
+},
+{
+text:`حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم`,
+count:7
+},
+{
+text:`بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم`,
+count:3
+},
+{
+text:`سبحان الله وبحمده`,
+count:100
+}
 ],
-"evening":[
-"أمسينا وأمسى الملك لله",
-"اللهم ما أمسى بي من نعمة أو بأحد من خلقك فمنك وحدك لا شريك لك",
-"رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا",
-"سبحان الله وبحمده سبحان الله العظيم",
-"اللهم إني أسألك خير ما في هذه الليلة وخير ما بعدها وأعوذ بك من شر هذه الليلة وشر ما بعدها",
-"أستغفر الله وأتوب إليه ثلاث مرات",
-"اللهم أعوذ بك من الكسل وسوء الكبر وشر الدنيا وشر الشيطان"
-],
-"afterPrayer":[
-"سبحان الله ثلاثاً وثلاثين",
-"الحمد لله ثلاثاً وثلاثين",
-"الله أكبر ثلاثاً وثلاثين",
-"لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير"
-],
-"beforeSleep":[
-"باسمك ربي وضعت جنبي وبك أرفعه، فإن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين",
-"اللهم قني عذابك يوم تبعث عبادك"
-],
-"uponWaking":[
-"الحمد لله الذي أحيانا بعدما أماتنا وإليه النشور",
-"أصبحنا على فطرة الإسلام وكلمة الإخلاص والدين القيم"
-],
-"ablution":[
-"بسم الله",
-"اللهم اجعلني من الطاهرين",
-"أستغفر الله من كل ذنب"
-],
-"home":[
-"بسم الله، توكلت على الله ولا حول ولا قوة إلا بالله",
-"اللهم اجعل هذا البيت عامراً بالذكر والطاعة"
+
+evening: [
+{
+text:`آية الكرسي:
+اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ وَلَا يَئُودُهُ حِفْظُهُمَا وَهُوَ الْعَلِيُّ الْعَظِيمُ`,
+count:1
+},
+{
+text:`أمسينا وأمسى الملك لله والحمد لله لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شيء قدير رب أسألك خير ما في هذه الليلة وخير ما بعدها وأعوذ بك من شر ما في هذه الليلة وشر ما بعدها رب أعوذ بك من الكسل وسوء الكبر رب أعوذ بك من عذاب في النار وعذاب في القبر`,
+count:1
+},
+{
+text:`رضيت بالله رباً وبالإسلام ديناً وبمحمد ﷺ نبياً`,
+count:3
+},
+{
+text:`حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم`,
+count:7
+},
+{
+text:`بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم`,
+count:3
+},
+{
+text:`سبحان الله وبحمده`,
+count:100
+}
 ]
 };
 
-// تحميل الأذكار
-function loadAzkar(){
-for(let key in azkarData){
-const ul=document.getElementById(key);
-azkarData[key].forEach(text=>{
-const li=document.createElement("li");
-li.innerText=text;
-ul.appendChild(li);
+let currentType = 'morning';
+
+function loadAzkar(type){
+currentType = type;
+const container = document.getElementById("content");
+container.innerHTML = "";
+
+azkarData[type].forEach((item,index)=>{
+let saved = localStorage.getItem(type+"-"+index);
+let currentCount = saved ? parseInt(saved) : item.count;
+
+let div = document.createElement("div");
+div.className="zekr";
+
+div.innerHTML = `
+<div>${item.text}</div>
+<div class="counter">
+<button onclick="decrease('${type}',${index})">تسبيح</button>
+<span class="count-number" id="count-${type}-${index}">
+${currentCount}
+</span>
+<button onclick="resetOne('${type}',${index},${item.count})">إعادة</button>
+</div>
+`;
+
+container.appendChild(div);
 });
 }
+
+function decrease(type,index){
+let span = document.getElementById(`count-${type}-${index}`);
+let value = parseInt(span.innerText);
+if(value>0){
+value--;
+span.innerText=value;
+localStorage.setItem(type+"-"+index,value);
+if(value===0){
+span.classList.add("done");
+}
+}
 }
 
-// Check list + LocalStorage
-window.onload=function(){
-  const tasks=['fasting','prayerTask','quranTask','charityTask','azkarTask'];
-  tasks.forEach(id=>{
-    const saved=localStorage.getItem(id);
-    if(saved==="true"){document.getElementById(id).checked=true;}
-  });
-  updateProgress();
-  loadAzkar();
-  loadQuran();
+function resetOne(type,index,original){
+localStorage.setItem(type+"-"+index,original);
+loadAzkar(type);
 }
 
-function saveTasks(){
-  const tasks=['fasting','prayerTask','quranTask','charityTask','azkarTask'];
-  let completedCount=0;
-  tasks.forEach(id=>{
-    const checked=document.getElementById(id).checked;
-    localStorage.setItem(id,checked);
-    if(checked) completedCount++;
-  });
-  const progress=(completedCount/tasks.length)*100;
-  document.getElementById("progressBar").style.width=progress+"%";
-  document.getElementById("certificate").style.display=(completedCount===tasks.length)?"block":"none";
-  alert("تم حفظ المهام يا ولاء 💜");
+function resetAll(){
+localStorage.clear();
+loadAzkar(currentType);
 }
 
-const taskCheckboxes=['fasting','prayerTask','quranTask','charityTask','azkarTask'];
-taskCheckboxes.forEach(id=>{
-  document.getElementById(id).addEventListener('change',updateProgress);
-});
-function updateProgress(){
-  let completedCount=0;
-  taskCheckboxes.forEach(id=>{if(document.getElementById(id).checked) completedCount++;});
-  const progress=(completedCount/taskCheckboxes.length)*100;
-  document.getElementById("progressBar").style.width=progress+"%";
-  document.getElementById("certificate").style.display=(completedCount===taskCheckboxes.length)?"block":"none";
-}
+loadAzkar('morning');
 
-// تحميل سور القرآن
-const suraListEl=document.getElementById("suraList");
-const verseTitleEl=document.getElementById("suraTitle");
-const verseListEl=document.getElementById("verseList");
-const verseContentEl=document.getElementById("verseContent");
-
-function loadQuran(){
-  fetch("https://api.alquran.cloud/v1/suwar/ar")
-  .then(res=>res.json())
-  .then(data=>{
-    const suras=data.data;
-    suras.forEach(s=>{
-      const li=document.createElement("li");
-      li.innerHTML=`<a href="#" onclick="showSura(${s.number},'${s.englishName}')">${s.englishName} - ${s.name}</a>`;
-      suraListEl.appendChild(li);
-    });
-  });
-}
-
-function showSura(number,name){
-fetch(`https://api.alquran.cloud/v1/surah/${number}/quran-uthmani`)
-.then(res=>res.json())
-.then(data=>{
-  verseTitleEl.innerText=name;
-  verseListEl.innerHTML="";
-  data.data.ayahs.forEach(ayah=>{
-    const p=document.createElement("p");
-    p.innerText=ayah.text;
-    verseListEl.appendChild(p);
-  });
-  verseContentEl.style.display="block";
-  window.scrollTo({top:verseContentEl.offsetTop-80,behavior:"smooth"});
-});
-}
 </script>
+
 </body>
 </html>
