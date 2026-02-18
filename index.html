@@ -9,13 +9,13 @@
 body{
 margin:0;
 font-family:'Tahoma';
-background:linear-gradient(135deg,#10002b,#240046,#3c096c);
+background: linear-gradient(135deg,#1a001a,#3c096c,#5a189a);
 color:white;
 text-align:center;
 overflow-x:hidden;
 }
 
-/* نجوم */
+/* نجوم متحركة */
 .stars{
 position:fixed;
 width:100%;
@@ -28,23 +28,25 @@ position:absolute;
 width:2px;
 height:2px;
 background:white;
+border-radius:50%;
 animation: twinkle 3s infinite alternate;
 }
 @keyframes twinkle{
-from{opacity:0.2;}
-to{opacity:1;}
+0%{opacity:0.2;}
+50%{opacity:1;}
+100%{opacity:0.2;}
 }
 
-/* هلال */
+/* هلال متحرك */
 .moon{
 position:fixed;
-top:60px;
+top:50px;
 left:50px;
 width:120px;
 height:120px;
 background:gold;
 border-radius:50%;
-box-shadow:-25px 0 0 0 #240046;
+box-shadow:-30px 0 0 0 #3c096c;
 animation: float 6s ease-in-out infinite;
 z-index:-1;
 }
@@ -71,6 +73,7 @@ border-radius:8px;
 border:none;
 margin:10px;
 text-align:center;
+width:200px;
 }
 button{
 padding:10px 20px;
@@ -79,8 +82,9 @@ border-radius:8px;
 background:#c77dff;
 color:white;
 cursor:pointer;
+transition:0.3s;
 }
-button:hover{background:#9d4edd;}
+button:hover{background:#9d4edd; transform: scale(1.05);}
 
 header{padding:20px;}
 
@@ -96,6 +100,7 @@ color:black;
 padding:8px;
 border-radius:10px;
 cursor:pointer;
+transition:0.3s;
 }
 .day:hover{background:violet;color:white;}
 .active{background:violet !important;color:white;}
@@ -103,22 +108,26 @@ cursor:pointer;
 .box{
 background:white;
 color:black;
-width:280px;
+width:300px;
 margin:20px auto;
 padding:15px;
 border-radius:10px;
+box-shadow:0 0 20px rgba(255,255,255,0.2);
+transition:0.3s;
 }
+.box:hover{transform:scale(1.02);}
 
 .progress-container{
 width:80%;
 background:#333;
 margin:20px auto;
 border-radius:10px;
+overflow:hidden;
 }
 .progress-bar{
 height:20px;
 width:0%;
-background:#c77dff;
+background:linear-gradient(90deg,#c77dff,#9d4edd);
 border-radius:10px;
 transition:1s;
 }
@@ -135,9 +144,11 @@ margin:20px auto;
 padding:20px;
 background:white;
 color:black;
-width:300px;
+width:320px;
 border-radius:15px;
+box-shadow:0 0 20px rgba(255,255,255,0.3);
 }
+
 </style>
 </head>
 
@@ -168,7 +179,7 @@ border-radius:15px;
 <label><input type="checkbox" id="zekr"> أذكار</label><br>
 <label><input type="checkbox" id="charity"> صدقة</label><br>
 <label><input type="checkbox" id="fasting"> صيام</label><br><br>
-<button onclick="saveDay()">حفظ</button>
+<button onclick="saveDay()">حفظ ✅</button>
 </div>
 
 <h3>📊 تقدمك</h3>
@@ -180,12 +191,12 @@ border-radius:15px;
 
 <div class="certificate" id="certificate">
 <h3>🏆 شهادة أسطورية 🏆</h3>
-<p id="certText"></p>
+<canvas id="certCanvas" width="300" height="200" style="border-radius:15px;"></canvas><br>
 <button onclick="downloadCert()">تحميل الشهادة</button>
 <button onclick="shareWhatsApp()">مشاركة واتساب</button>
 </div>
 
-<audio id="sound" autoplay>
+<audio id="sound" autoplay loop>
 <source src="https://cdn.islamic.network/quran/audio/64/ar.alafasy/001.mp3" type="audio/mpeg">
 </audio>
 
@@ -210,6 +221,7 @@ document.getElementById("title").innerHTML="رمضان كريم يا "+user;
 document.getElementById("sound").play();
 }
 
+// إنشاء أيام التقويم
 let selectedDay=null;
 for(let i=1;i<=30;i++){
 let div=document.createElement("div");
@@ -224,6 +236,7 @@ loadDay(i);
 calendar.appendChild(div);
 }
 
+// تحميل وحفظ المهام
 function loadDay(d){
 ibadahBox.style.display="block";
 dayTitle.innerHTML="اليوم "+d;
@@ -245,9 +258,11 @@ fasting:fasting.checked
 };
 localStorage.setItem("d"+selectedDay,JSON.stringify(data));
 updateProgress();
+document.getElementById("sound").play();
 alert("ما شاء الله يا "+user+" 💜 استمري 🌙");
 }
 
+// تحديث التقدم
 function updateProgress(){
 let completed=0;
 let points=0;
@@ -267,20 +282,32 @@ level.innerHTML="المستوى: "+lvl+" | النقاط: "+points;
 
 if(completed==30){
 certificate.style.display="block";
-certText.innerHTML="نهنئ "+user+" بإتمام الرحلة الإيمانية 🌙";
+let canvas=document.getElementById("certCanvas");
+let ctx=canvas.getContext("2d");
+ctx.fillStyle="#f7f1e3";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#000";
+ctx.font="18px Tahoma";
+ctx.textAlign="center";
+ctx.fillText("🏆 شهادة إتمام رمضان 🏆",canvas.width/2,50);
+ctx.fillText(user,canvas.width/2,100);
+ctx.fillText("ما شاء الله 💜 استمري في الطاعة",canvas.width/2,150);
 }
 }
 }
 
 updateProgress();
 
+// تحميل الشهادة كصورة PNG
 function downloadCert(){
-let a=document.createElement("a");
-a.href="data:text/plain;charset=utf-8,شهادة إتمام رمضان باسم "+user;
-a.download="certificate.txt";
-a.click();
+let canvas=document.getElementById("certCanvas");
+let link=document.createElement("a");
+link.download="Certificate.png";
+link.href=canvas.toDataURL();
+link.click();
 }
 
+// مشاركة واتساب
 function shareWhatsApp(){
 let text="أنهيت رحلتي الإيمانية في رمضان 🌙✨";
 window.open("https://wa.me/?text="+encodeURIComponent(text));
