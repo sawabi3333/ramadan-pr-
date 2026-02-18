@@ -155,7 +155,7 @@ border-radius:15px;
 
 <header>
 <h2 id="title"></h2>
-<div id="countdown"></div>
+<div id="countdown">رمضان مبارك ✨</div>
 </header>
 
 <h3>📅 اختاري يوم</h3>
@@ -185,8 +185,8 @@ border-radius:15px;
 <button onclick="shareWhatsApp()">مشاركة واتساب</button>
 </div>
 
-<audio id="sound">
-<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+<audio id="sound" autoplay>
+<source src="https://cdn.islamic.network/quran/audio/64/ar.alafasy/001.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -209,18 +209,6 @@ document.getElementById("welcome").style.display="none";
 document.getElementById("title").innerHTML="رمضان كريم يا "+user;
 document.getElementById("sound").play();
 }
-
-let ramadanDate=new Date("March 1, 2026 00:00:00").getTime();
-setInterval(()=>{
-let now=new Date().getTime();
-let diff=ramadanDate-now;
-if(diff>0){
-let d=Math.floor(diff/(1000*60*60*24));
-countdown.innerHTML="متبقي: "+d+" يوم";
-}else{
-countdown.innerHTML="رمضان مبارك ✨";
-}
-},1000);
 
 let selectedDay=null;
 for(let i=1;i<=30;i++){
@@ -283,6 +271,7 @@ certText.innerHTML="نهنئ "+user+" بإتمام الرحلة الإيماني
 }
 }
 }
+
 updateProgress();
 
 function downloadCert(){
