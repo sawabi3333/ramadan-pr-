@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>رحلة ولاء الأسطورية 🌙</title>
 
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#240046">
-
 <style>
 body{
 margin:0;
@@ -15,26 +12,66 @@ font-family:'Tahoma';
 background:linear-gradient(135deg,#10002b,#240046,#3c096c);
 color:white;
 text-align:center;
+overflow-x:hidden;
 }
 
-/* أنيميشن خلفية */
-body::before{
-content:"";
+/* نجوم */
+.stars{
 position:fixed;
-width:200%;
-height:200%;
-background:radial-gradient(circle,rgba(255,255,255,0.05) 1px,transparent 1px);
-background-size:50px 50px;
-animation:move 30s linear infinite;
+width:100%;
+height:100%;
+overflow:hidden;
+z-index:-2;
+}
+.star{
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+animation: twinkle 3s infinite alternate;
+}
+@keyframes twinkle{
+from{opacity:0.2;}
+to{opacity:1;}
+}
+
+/* هلال */
+.moon{
+position:fixed;
+top:60px;
+left:50px;
+width:120px;
+height:120px;
+background:gold;
+border-radius:50%;
+box-shadow:-25px 0 0 0 #240046;
+animation: float 6s ease-in-out infinite;
 z-index:-1;
 }
-@keyframes move{
-from{transform:translate(0,0);}
-to{transform:translate(-50px,-50px);}
+@keyframes float{
+0%,100%{transform:translateY(0);}
+50%{transform:translateY(20px);}
 }
 
-header{padding:20px;}
-
+/* شاشة البداية */
+#welcome{
+position:fixed;
+width:100%;
+height:100%;
+background:#000000e6;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:10;
+}
+#welcome input{
+padding:10px;
+border-radius:8px;
+border:none;
+margin:10px;
+text-align:center;
+}
 button{
 padding:10px 20px;
 border:none;
@@ -45,13 +82,40 @@ cursor:pointer;
 }
 button:hover{background:#9d4edd;}
 
-.progress{
+header{padding:20px;}
+
+.grid{
+display:grid;
+grid-template-columns: repeat(auto-fit,minmax(80px,1fr));
+gap:8px;
+padding:20px;
+}
+.day{
+background:white;
+color:black;
+padding:8px;
+border-radius:10px;
+cursor:pointer;
+}
+.day:hover{background:violet;color:white;}
+.active{background:violet !important;color:white;}
+
+.box{
+background:white;
+color:black;
+width:280px;
+margin:20px auto;
+padding:15px;
+border-radius:10px;
+}
+
+.progress-container{
 width:80%;
 background:#333;
 margin:20px auto;
 border-radius:10px;
 }
-.bar{
+.progress-bar{
 height:20px;
 width:0%;
 background:#c77dff;
@@ -59,82 +123,179 @@ border-radius:10px;
 transition:1s;
 }
 
-.badge{
+.level{
 margin:10px;
 font-size:18px;
 color:gold;
+}
+
+.certificate{
+display:none;
+margin:20px auto;
+padding:20px;
+background:white;
+color:black;
+width:300px;
+border-radius:15px;
 }
 </style>
 </head>
 
 <body>
 
+<div class="stars" id="stars"></div>
+<div class="moon"></div>
+
+<!-- شاشة الترحيب -->
+<div id="welcome">
+<h2>🌙 أهلاً بكِ في رحلتك الأسطورية</h2>
+<input type="text" id="username" placeholder="اكتبي اسمك">
+<button onclick="start()">ابدئي ✨</button>
+</div>
+
 <header>
-<h1>🌙 رمضان كريم يا ولاء 💜</h1>
+<h2 id="title"></h2>
 <div id="countdown"></div>
 </header>
 
-<h3>نظام النقاط الأسطوري</h3>
-<div class="progress"><div class="bar" id="bar"></div></div>
-<div class="badge" id="badge"></div>
+<h3>📅 اختاري يوم</h3>
+<div class="grid" id="calendar"></div>
 
-<button onclick="addPoints()">إضافة 10 نقاط تجربة</button>
-<button onclick="notify()">تفعيل تذكير يومي</button>
+<div class="box" id="ibadahBox" style="display:none;">
+<h4 id="dayTitle"></h4>
+<label><input type="checkbox" id="prayer"> صلاة</label><br>
+<label><input type="checkbox" id="quran"> قرآن</label><br>
+<label><input type="checkbox" id="zekr"> أذكار</label><br>
+<label><input type="checkbox" id="charity"> صدقة</label><br>
+<label><input type="checkbox" id="fasting"> صيام</label><br><br>
+<button onclick="saveDay()">حفظ</button>
+</div>
+
+<h3>📊 تقدمك</h3>
+<div class="progress-container">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="level" id="level"></div>
+
+<div class="certificate" id="certificate">
+<h3>🏆 شهادة أسطورية 🏆</h3>
+<p id="certText"></p>
+<button onclick="downloadCert()">تحميل الشهادة</button>
+<button onclick="shareWhatsApp()">مشاركة واتساب</button>
+</div>
+
+<audio id="sound">
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
 
 <script>
-
-// تسجيل Service Worker
-if('serviceWorker' in navigator){
-navigator.serviceWorker.register('service-worker.js');
+/* نجوم عشوائية */
+for(let i=0;i<120;i++){
+let star=document.createElement("div");
+star.className="star";
+star.style.top=Math.random()*100+"%";
+star.style.left=Math.random()*100+"%";
+star.style.animationDelay=Math.random()*3+"s";
+document.getElementById("stars").appendChild(star);
 }
 
-// عداد رمضان 2026
+let user="ولاء 💜";
+
+function start(){
+let input=document.getElementById("username").value;
+if(input.trim()!="") user=input;
+document.getElementById("welcome").style.display="none";
+document.getElementById("title").innerHTML="رمضان كريم يا "+user;
+document.getElementById("sound").play();
+}
+
 let ramadanDate=new Date("March 1, 2026 00:00:00").getTime();
 setInterval(()=>{
 let now=new Date().getTime();
 let diff=ramadanDate-now;
 if(diff>0){
 let d=Math.floor(diff/(1000*60*60*24));
-countdown.innerHTML="متبقي على رمضان: "+d+" يوم";
+countdown.innerHTML="متبقي: "+d+" يوم";
 }else{
-countdown.innerHTML="رمضان مبارك 💜";
+countdown.innerHTML="رمضان مبارك ✨";
 }
 },1000);
 
-let points=localStorage.getItem("points")||0;
-update();
-
-function addPoints(){
-points=parseInt(points)+10;
-localStorage.setItem("points",points);
-update();
+let selectedDay=null;
+for(let i=1;i<=30;i++){
+let div=document.createElement("div");
+div.className="day";
+div.innerHTML=i;
+div.onclick=function(){
+document.querySelectorAll(".day").forEach(d=>d.classList.remove("active"));
+div.classList.add("active");
+selectedDay=i;
+loadDay(i);
+}
+calendar.appendChild(div);
 }
 
-function update(){
-let percent=Math.min(points/1000*100,100);
-bar.style.width=percent+"%";
-
-let level="🌱 مبتدئة";
-if(points>200) level="🥉 برونزي";
-if(points>400) level="🥈 فضي";
-if(points>700) level="🥇 ذهبي";
-if(points>=1000) level="👑 ملكة رمضان";
-
-badge.innerHTML="النقاط: "+points+" | المستوى: "+level;
+function loadDay(d){
+ibadahBox.style.display="block";
+dayTitle.innerHTML="اليوم "+d;
+let data=JSON.parse(localStorage.getItem("d"+d))||{};
+prayer.checked=data.prayer||false;
+quran.checked=data.quran||false;
+zekr.checked=data.zekr||false;
+charity.checked=data.charity||false;
+fasting.checked=data.fasting||false;
 }
 
-// إشعارات
-function notify(){
-if(Notification.permission!=="granted"){
-Notification.requestPermission();
-}else{
-new Notification("🌙 تذكير يا ولاء",{
-body:"متنسيش ورد القرآن النهارده 💜",
-icon:"https://cdn-icons-png.flaticon.com/512/833/833314.png"
-});
-}
+function saveDay(){
+let data={
+prayer:prayer.checked,
+quran:quran.checked,
+zekr:zekr.checked,
+charity:charity.checked,
+fasting:fasting.checked
+};
+localStorage.setItem("d"+selectedDay,JSON.stringify(data));
+updateProgress();
+alert("ما شاء الله يا "+user+" 💜 استمري 🌙");
 }
 
+function updateProgress(){
+let completed=0;
+let points=0;
+for(let i=1;i<=30;i++){
+let d=JSON.parse(localStorage.getItem("d"+i));
+if(d){
+let c=Object.values(d).filter(v=>v).length;
+points+=c*10;
+if(c>=3) completed++;
+}
+progressBar.style.width=(completed/30*100)+"%";
+let lvl="🌱 مبتدئة";
+if(points>300) lvl="🥈 فضي";
+if(points>600) lvl="🥇 ذهبي";
+if(points>900) lvl="👑 أسطوري";
+level.innerHTML="المستوى: "+lvl+" | النقاط: "+points;
+
+if(completed==30){
+certificate.style.display="block";
+certText.innerHTML="نهنئ "+user+" بإتمام الرحلة الإيمانية 🌙";
+}
+}
+}
+updateProgress();
+
+function downloadCert(){
+let a=document.createElement("a");
+a.href="data:text/plain;charset=utf-8,شهادة إتمام رمضان باسم "+user;
+a.download="certificate.txt";
+a.click();
+}
+
+function shareWhatsApp(){
+let text="أنهيت رحلتي الإيمانية في رمضان 🌙✨";
+window.open("https://wa.me/?text="+encodeURIComponent(text));
+}
 </script>
 
 </body>
