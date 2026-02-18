@@ -20,7 +20,7 @@ button:hover{transform:scale(1.05);background:#c77dff;}
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(20px);}}
 table{margin:20px auto;border-collapse:collapse;font-size:18px;}
 th,td{padding:10px;border:1px solid #c77dff;}
-ul{list-style:none;padding:0;}
+ul{list-style:none;padding:0;text-align:right;}
 li{margin:10px 0;font-size:18px;}
 .sura-list a{color:white;text-decoration:none;}
 .sura-list a:hover{color:#c77dff;}
@@ -31,6 +31,7 @@ li{margin:10px 0;font-size:18px;}
 .progress-container{width:80%;background:#5a189a;margin:20px auto;border-radius:10px;overflow:hidden;}
 .progress-bar{height:20px;width:0%;background:linear-gradient(90deg,#c77dff,#9d4edd);border-radius:10px;transition:1s;}
 .certificate{display:none;margin:20px auto;padding:20px;background:#9d4edd;color:white;width:320px;border-radius:15px;box-shadow:0 0 20px rgba(255,255,255,0.3);}
+.azkar-list li{margin-bottom:10px;}
 </style>
 </head>
 <body>
@@ -46,14 +47,12 @@ li{margin:10px 0;font-size:18px;}
 <a href="#tasks">مهام رمضان</a>
 </nav>
 
-<!-- Welcome -->
 <section id="welcome">
 <h2>رمضان كريم 💜</h2>
 <p>أهلاً يا ولاء، نتمنى لكِ رمضان مبارك 🌙✨</p>
 <button onclick="location.href='#prayer'">ابدئي رحلتك الرمضانية</button>
 </section>
 
-<!-- Prayer Times -->
 <section id="prayer">
 <h2>مواقيت الصلاة - القاهرة</h2>
 <table>
@@ -66,28 +65,24 @@ li{margin:10px 0;font-size:18px;}
 </table>
 </section>
 
-<!-- Azkar -->
 <section id="azkar">
-<h2>أذكار الصباح 💜</h2>
-<ul>
-<li>أصبحنا وأصبح الملك لله</li>
-<li>اللهم ما أصبح بي من نعمة أو بأحد من خلقك فمنك وحدك لا شريك لك</li>
-<li>رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا</li>
-<li>سبحان الله وبحمده سبحان الله العظيم</li>
-<li>اللهم إني أسألك خير ما في هذا اليوم وخير ما بعده، وأعوذ بك من شر هذا اليوم وشر ما بعده</li>
-</ul>
-
-<h2>أذكار المساء 💜</h2>
-<ul>
-<li>أمسينا وأمسى الملك لله</li>
-<li>اللهم ما أمسى بي من نعمة أو بأحد من خلقك فمنك وحدك لا شريك لك</li>
-<li>رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا</li>
-<li>سبحان الله وبحمده سبحان الله العظيم</li>
-<li>اللهم إني أسألك خير ما في هذه الليلة وخير ما بعدها، وأعوذ بك من شر هذه الليلة وشر ما بعدها</li>
-</ul>
+<h2>الأذكار من حصن المسلم 💜</h2>
+<h3>أذكار الصباح</h3>
+<ul class="azkar-list" id="morning"></ul>
+<h3>أذكار المساء</h3>
+<ul class="azkar-list" id="evening"></ul>
+<h3>أذكار بعد الصلاة</h3>
+<ul class="azkar-list" id="afterPrayer"></ul>
+<h3>أذكار قبل النوم</h3>
+<ul class="azkar-list" id="beforeSleep"></ul>
+<h3>أذكار عند الاستيقاظ</h3>
+<ul class="azkar-list" id="uponWaking"></ul>
+<h3>أذكار الوضوء</h3>
+<ul class="azkar-list" id="ablution"></ul>
+<h3>أذكار دخول وخروج المنزل</h3>
+<ul class="azkar-list" id="home"></ul>
 </section>
 
-<!-- Quran -->
 <section id="quran">
 <h2>القرآن الكريم 💜</h2>
 <p>اختاري سورة لعرض الآيات:</p>
@@ -98,7 +93,6 @@ li{margin:10px 0;font-size:18px;}
 </div>
 </section>
 
-<!-- Tasks -->
 <section id="tasks">
 <h2>مهام رمضان اليومية ✅</h2>
 <div class="task"><label><input type="checkbox" id="fasting"> صيام</label></div>
@@ -107,11 +101,9 @@ li{margin:10px 0;font-size:18px;}
 <div class="task"><label><input type="checkbox" id="charityTask"> صدقة</label></div>
 <div class="task"><label><input type="checkbox" id="azkarTask"> أذكار</label></div>
 <button onclick="saveTasks()">حفظ ✅</button>
-
 <div class="progress-container">
 <div class="progress-bar" id="progressBar"></div>
 </div>
-
 <div class="certificate" id="certificate">
 <h3>🏆 تهانينا يا ولاء 💜</h3>
 <p>لقد أتممت جميع مهام رمضان اليومية!</p>
@@ -129,7 +121,64 @@ star.style.animationDelay=Math.random()*3+"s";
 document.getElementById("stars").appendChild(star);
 }
 
-// Check list مع LocalStorage
+// الأذكار كلها داخل الكود
+const azkarData={
+"morning":[
+"أصبحنا وأصبح الملك لله",
+"اللهم ما أصبح بي من نعمة أو بأحد من خلقك فمنك وحدك لا شريك لك",
+"رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا",
+"سبحان الله وبحمده سبحان الله العظيم",
+"اللهم إني أسألك خير ما في هذا اليوم وخير ما بعده وأعوذ بك من شر هذا اليوم وشر ما بعده",
+"أستغفر الله وأتوب إليه ثلاث مرات",
+"اللهم أعوذ بك من الكسل وسوء الكبر وشر الدنيا وشر الشيطان"
+],
+"evening":[
+"أمسينا وأمسى الملك لله",
+"اللهم ما أمسى بي من نعمة أو بأحد من خلقك فمنك وحدك لا شريك لك",
+"رضيت بالله ربا وبالإسلام دينا وبمحمد ﷺ نبيا",
+"سبحان الله وبحمده سبحان الله العظيم",
+"اللهم إني أسألك خير ما في هذه الليلة وخير ما بعدها وأعوذ بك من شر هذه الليلة وشر ما بعدها",
+"أستغفر الله وأتوب إليه ثلاث مرات",
+"اللهم أعوذ بك من الكسل وسوء الكبر وشر الدنيا وشر الشيطان"
+],
+"afterPrayer":[
+"سبحان الله ثلاثاً وثلاثين",
+"الحمد لله ثلاثاً وثلاثين",
+"الله أكبر ثلاثاً وثلاثين",
+"لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير"
+],
+"beforeSleep":[
+"باسمك ربي وضعت جنبي وبك أرفعه، فإن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين",
+"اللهم قني عذابك يوم تبعث عبادك"
+],
+"uponWaking":[
+"الحمد لله الذي أحيانا بعدما أماتنا وإليه النشور",
+"أصبحنا على فطرة الإسلام وكلمة الإخلاص والدين القيم"
+],
+"ablution":[
+"بسم الله",
+"اللهم اجعلني من الطاهرين",
+"أستغفر الله من كل ذنب"
+],
+"home":[
+"بسم الله، توكلت على الله ولا حول ولا قوة إلا بالله",
+"اللهم اجعل هذا البيت عامراً بالذكر والطاعة"
+]
+};
+
+// تحميل الأذكار
+function loadAzkar(){
+for(let key in azkarData){
+const ul=document.getElementById(key);
+azkarData[key].forEach(text=>{
+const li=document.createElement("li");
+li.innerText=text;
+ul.appendChild(li);
+});
+}
+}
+
+// Check list + LocalStorage
 window.onload=function(){
   const tasks=['fasting','prayerTask','quranTask','charityTask','azkarTask'];
   tasks.forEach(id=>{
@@ -137,6 +186,8 @@ window.onload=function(){
     if(saved==="true"){document.getElementById(id).checked=true;}
   });
   updateProgress();
+  loadAzkar();
+  loadQuran();
 }
 
 function saveTasks(){
@@ -149,8 +200,7 @@ function saveTasks(){
   });
   const progress=(completedCount/tasks.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
-  if(completedCount===tasks.length){document.getElementById("certificate").style.display="block";}
-  else{document.getElementById("certificate").style.display="none";}
+  document.getElementById("certificate").style.display=(completedCount===tasks.length)?"block":"none";
   alert("تم حفظ المهام يا ولاء 💜");
 }
 
@@ -158,35 +208,35 @@ const taskCheckboxes=['fasting','prayerTask','quranTask','charityTask','azkarTas
 taskCheckboxes.forEach(id=>{
   document.getElementById(id).addEventListener('change',updateProgress);
 });
-
 function updateProgress(){
   let completedCount=0;
   taskCheckboxes.forEach(id=>{if(document.getElementById(id).checked) completedCount++;});
   const progress=(completedCount/taskCheckboxes.length)*100;
   document.getElementById("progressBar").style.width=progress+"%";
-  if(completedCount===taskCheckboxes.length){document.getElementById("certificate").style.display="block";}
-  else{document.getElementById("certificate").style.display="none";}
+  document.getElementById("certificate").style.display=(completedCount===taskCheckboxes.length)?"block":"none";
 }
 
-// القرآن API
+// تحميل سور القرآن
 const suraListEl=document.getElementById("suraList");
 const verseTitleEl=document.getElementById("suraTitle");
 const verseListEl=document.getElementById("verseList");
 const verseContentEl=document.getElementById("verseContent");
 
-fetch("https://api.alquran.cloud/v1/suwar/ar")
-.then(res=>res.json())
-.then(data=>{
-  const suras=data.data;
-  suras.forEach(s=>{
-    const li=document.createElement("li");
-    li.innerHTML=`<a href="#" onclick="showSura(${s.number},'${s.englishName}')">${s.englishName} - ${s.name}</a>`;
-    suraListEl.appendChild(li);
+function loadQuran(){
+  fetch("https://api.alquran.cloud/v1/suwar/ar")
+  .then(res=>res.json())
+  .then(data=>{
+    const suras=data.data;
+    suras.forEach(s=>{
+      const li=document.createElement("li");
+      li.innerHTML=`<a href="#" onclick="showSura(${s.number},'${s.englishName}')">${s.englishName} - ${s.name}</a>`;
+      suraListEl.appendChild(li);
+    });
   });
-});
+}
 
 function showSura(number,name){
-fetch(`https://api.alquran.cloud/v1/surah/${number}/ar.alafasy`)
+fetch(`https://api.alquran.cloud/v1/surah/${number}/quran-uthmani`)
 .then(res=>res.json())
 .then(data=>{
   verseTitleEl.innerText=name;
