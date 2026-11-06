@@ -1,209 +1,640 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💜 أذكار الصباح والمساء 💜</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#21152b">
+<title>Ahmed & Walaa — Wedding Invitation</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-body{
-    margin:0;
-    font-family: Tahoma;
-    color:white;
-    overflow-x:hidden;
-    background: #1a0033;
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#100b15;color:#302337;font-family:"Montserrat",Arial,sans-serif;overflow-x:hidden}
+button,input,textarea{font-family:inherit}
+button{cursor:pointer}
+a{color:inherit}
+
+:root{
+--purple-deep:#21152b;
+--purple:#5f426f;
+--purple-light:#8d6a9c;
+--purple-soft:#b79bc1;
+--lavender:#d8c8dc;
+--cream:#f5eff6;
+--paper:#fbf8fc;
+--ink:#302337;
+--muted:#786d7c;
+--line:rgba(48,35,55,.16);
+--white:#fff;
+--serif:"Cormorant Garamond",Georgia,serif;
+--sans:"Montserrat",Arial,sans-serif;
 }
-canvas#stars{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    z-index:-2;
+
+.page{width:100%;max-width:540px;min-height:100vh;margin:auto;background:var(--cream);overflow:hidden;box-shadow:0 0 70px rgba(0,0,0,.3)}
+
+.cover{position:relative;width:100%;height:100svh;min-height:680px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:radial-gradient(circle at 50% 28%,rgba(141,106,156,.3),transparent 30%),linear-gradient(145deg,#fbf8fc 0%,#e5d9e8 48%,#d2c0d8 100%)}
+.cover::after{content:"";position:absolute;inset:0;opacity:.13;pointer-events:none;background-image:radial-gradient(rgba(85,60,100,.22) 1px,transparent 1px);background-size:8px 8px}
+.frame{position:absolute;inset:18px;border:1px solid rgba(95,66,111,.55);pointer-events:none}
+.frame::before,.frame::after{content:"";position:absolute;width:72px;height:72px;border:1px solid rgba(95,66,111,.55)}
+.frame::before{left:-1px;top:-1px;border-right:0;border-bottom:0}
+.frame::after{right:-1px;bottom:-1px;border-left:0;border-top:0}
+
+.ornament{position:absolute;font-family:var(--serif);color:rgba(95,66,111,.2);pointer-events:none}
+.ornament.top{top:-38px;right:-20px;font-size:185px;transform:rotate(8deg)}
+.ornament.bottom{bottom:-55px;left:-30px;font-size:190px;transform:rotate(185deg)}
+
+.envelope-container{position:absolute;left:50%;bottom:-105px;width:330px;height:220px;transform:translateX(-50%);opacity:.22;transition:opacity 1s ease,transform 1.2s cubic-bezier(.2,.8,.2,1);z-index:2}
+.cover.opened .envelope-container{opacity:0;transform:translateX(-50%) translateY(260px) scale(.75)}
+.envelope{position:relative;width:100%;height:100%;background:#d2c1d7;box-shadow:0 20px 45px rgba(45,30,50,.2)}
+.envelope::before{content:"";position:absolute;left:0;top:0;width:0;height:0;border-left:165px solid transparent;border-right:165px solid transparent;border-top:120px solid #bda6c4;transform-origin:top;transition:transform 1s ease}
+.cover.opened .envelope::before{transform:rotateX(180deg)}
+.seal{position:absolute;left:50%;top:48%;width:48px;height:48px;transform:translate(-50%,-50%) rotate(45deg);background:#6e4c7d;opacity:.9}
+.seal::after{content:"A";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--serif);font-size:20px;transform:rotate(-45deg)}
+
+.cover-content{position:relative;z-index:5;padding:25px;animation:coverEnter 1.3s cubic-bezier(.2,.8,.2,1) both}
+.cover.opened .cover-content{animation:coverExit .8s ease both}
+.kicker{margin-bottom:28px;color:#6e4c7d;font-size:9px;letter-spacing:5px;text-transform:uppercase}
+.names{font-family:var(--serif);font-size:clamp(64px,18vw,96px);line-height:.68;font-weight:500;letter-spacing:-3px;color:#302337}
+.amp{margin:24px 0;color:#80608e;font-family:var(--serif);font-size:35px}
+.cover-date{margin-top:38px;color:#5d5262;font-size:10px;letter-spacing:3px}
+
+.open-button{margin-top:44px;padding:16px 31px;background:transparent;border:1px solid #70507e;color:#302337;font-size:9px;letter-spacing:3px;text-transform:uppercase;transition:.35s ease}
+.open-button:hover{background:#302337;color:#fff;border-color:#302337}
+.open-button:active{transform:scale(.97)}
+
+.section{position:relative;padding:82px 28px;border-top:1px solid var(--line)}
+.center{text-align:center}
+.eyebrow{color:#765482;font-size:9px;letter-spacing:4px;text-transform:uppercase}
+h2{margin:16px 0 23px;color:#302337;font-family:var(--serif);font-size:54px;line-height:.84;font-weight:500}
+.lead{max-width:390px;margin:auto;color:var(--muted);font-size:11px;line-height:2}
+.rule{width:55px;height:1px;margin:32px auto;background:#8d6a9c}
+
+.details{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:35px}
+.detail{padding:24px 8px;border:1px solid var(--line);background:rgba(255,255,255,.25)}
+.detail strong{display:block;margin-bottom:8px;color:#46364d;font-family:var(--serif);font-size:27px;line-height:1}
+.detail span{color:var(--muted);font-size:8px;letter-spacing:2px;text-transform:uppercase}
+
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:30px}
+.count{padding:16px 3px;border:1px solid var(--line);background:rgba(255,255,255,.12)}
+.count strong{display:block;color:#4b3654;font-family:var(--serif);font-size:30px;font-weight:500;line-height:1}
+.count span{display:block;margin-top:7px;color:var(--muted);font-size:7px;letter-spacing:1.5px;text-transform:uppercase}
+
+.story{background:linear-gradient(rgba(245,239,246,.96),rgba(245,239,246,.96))}
+.quote{margin-top:34px;padding:30px 20px;border-top:1px solid #8d6a9c;border-bottom:1px solid #8d6a9c;color:#514258;font-family:var(--serif);font-size:29px;line-height:1.08;font-style:italic}
+
+.timeline{margin-top:38px;margin-left:5px;padding-left:27px;border-left:1px solid #8d6a9c}
+.event{position:relative;margin-bottom:38px}
+.event:last-child{margin-bottom:0}
+.event::before{content:"";position:absolute;left:-32px;top:3px;width:8px;height:8px;border:1px solid #80608e;border-radius:50%;background:var(--cream)}
+.event-time{color:#765482;font-size:9px;letter-spacing:2px}
+.event-title{margin:7px 0;color:#403047;font-family:var(--serif);font-size:30px;font-weight:600}
+.event-text{color:var(--muted);font-size:10px;line-height:1.8}
+
+.location-card{margin-top:32px;padding:36px 20px;border:1px solid var(--line);background:rgba(255,255,255,.18);text-align:center}
+.location-icon{color:#765482;font-family:var(--serif);font-size:45px}
+.venue{margin:10px 0;color:#403047;font-family:var(--serif);font-size:35px}
+.address{margin-bottom:22px;color:var(--muted);font-size:10px;line-height:1.8}
+.map-button{display:inline-block;padding:14px 22px;background:#302337;color:#fff;text-decoration:none;font-size:8px;letter-spacing:2px;text-transform:uppercase;transition:.3s ease}
+.map-button:hover{background:#6e4c7d}
+.map-button:active{transform:scale(.97)}
+
+.form{margin-top:32px}
+.field{margin-bottom:17px}
+.field label{display:block;margin-bottom:8px;color:var(--muted);font-size:8px;letter-spacing:2px;text-transform:uppercase}
+.field input,.field textarea{width:100%;padding:14px;border:1px solid var(--line);border-radius:0;outline:none;background:rgba(255,255,255,.28);color:var(--ink);font-size:12px;transition:.25s ease}
+.field textarea{min-height:120px;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:#80608e;box-shadow:0 0 0 2px rgba(128,96,142,.08)}
+.submit{width:100%;padding:17px;border:0;background:#302337;color:#fff;font-size:8px;letter-spacing:3px;text-transform:uppercase;transition:.3s ease}
+.submit:hover{background:#6e4c7d}
+.submit:active{transform:scale(.98)}
+
+.success{display:none;margin-top:18px;padding:18px;border:1px solid rgba(112,80,126,.45);background:rgba(255,255,255,.2);text-align:center;color:#46364d;font-size:10px;line-height:1.8}
+.success.show{display:block;animation:fadeUp .5s ease both}
+.guestbook{margin-top:34px}
+.guest{padding:17px 0;border-bottom:1px solid var(--line)}
+.guest-name{color:#46364d;font-family:var(--serif);font-size:24px;font-weight:600}
+.guest-text{margin-top:5px;color:var(--muted);font-size:10px;line-height:1.7}
+
+.footer{position:relative;padding:95px 28px;background:#21152b;color:var(--cream);text-align:center;overflow:hidden}
+.footer::before{content:"❧";position:absolute;right:-35px;top:-45px;color:rgba(183,155,193,.11);font-family:var(--serif);font-size:210px}
+.footer .eyebrow{color:#b79bc1}
+.footer-names{margin-top:17px;color:#f7f0f8;font-family:var(--serif);font-size:62px;line-height:.76;font-weight:500}
+.footer-text{margin-top:25px;color:rgba(245,239,246,.6);font-size:10px;line-height:1.9}
+.back{margin-top:31px;padding:13px 20px;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;font-size:8px;letter-spacing:2px;text-transform:uppercase}
+
+.reveal{opacity:0;transform:translateY(35px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.visible{opacity:1;transform:none}
+.toast{position:fixed;z-index:999;left:50%;bottom:22px;padding:12px 18px;background:#21152b;color:#fff;font-size:9px;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(-50%,20px);transition:.3s ease}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@keyframes coverEnter{from{opacity:0;transform:translateY(35px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes coverExit{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-25px) scale(.97)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+@media(max-width:360px){
+.section{padding:65px 20px}
+.names{font-size:59px}
+h2{font-size:47px}
+.footer-names{font-size:53px}
 }
-.moon{
-    position:fixed;
-    top:30px;
-    left:30px;
-    font-size:70px;
-    opacity:0.15;
-    z-index:-1;
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
-h1{
-    text-align:center;
-    padding-top:30px;
-}
-.buttons{
-    text-align:center;
-    margin:20px 0;
-}
-button{
-    padding:8px 16px;
-    margin:5px;
-    border:none;
-    border-radius:20px;
-    cursor:pointer;
-    background:linear-gradient(45deg,#b266ff,#8a2be2);
-    color:white;
-    font-weight:bold;
-    transition:0.3s;
-}
-button:hover{
-    transform:scale(1.05);
-    box-shadow:0 0 15px #d9a3ff;
-}
-.zekr{
-    backdrop-filter:blur(10px);
-    background:rgba(255,255,255,0.1);
-    border:1px solid rgba(255,255,255,0.2);
-    padding:15px;
-    border-radius:15px;
-    margin:15px auto;
-    width:90%;
-    max-width:800px;
-    box-shadow:0 0 15px rgba(186,85,211,0.3);
-    animation: fadeIn 0.5s ease;
-}
-@keyframes fadeIn{
-    from{opacity:0; transform:translateY(10px);}
-    to{opacity:1; transform:translateY(0);}
-}
-.counter{
-    margin-top:10px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-.count{
-    font-size:18px;
-    font-weight:bold;
-    color:#e0b3ff;
-}
-.done{ color:#ff66cc; }
 </style>
 </head>
 
 <body>
-<canvas id="stars"></canvas>
-<div class="moon">🌙</div>
+<div class="page">
 
-<h1>💜 أذكار الصباح والمساء 💜</h1>
+<!-- COVER -->
+<section class="cover" id="cover">
+<div class="frame"></div>
+<div class="ornament top">❧</div>
+<div class="ornament bottom">❧</div>
 
-<div class="buttons">
-<button onclick="loadAzkar('morning')">أذكار الصباح</button>
-<button onclick="loadAzkar('evening')">أذكار المساء</button>
-<button onclick="resetAll()">إعادة تعيين</button>
+<div class="envelope-container">
+<div class="envelope"><div class="seal"></div></div>
 </div>
 
-<div id="content"></div>
+<div class="cover-content">
+<div class="kicker">The Wedding Invitation</div>
+<div class="names">Ahmed</div>
+<div class="amp">&</div>
+<div class="names">Walaa</div>
+
+<div class="cover-date">
+SATURDAY · 02 · 01 · 2027
+&nbsp; • &nbsp;
+7:00 PM
+</div>
+
+<button class="open-button" id="openInvitation" type="button">
+Open Invitation
+</button>
+</div>
+</section>
+
+<!-- WELCOME -->
+<section class="section center reveal">
+<div class="eyebrow">Together with our families</div>
+<h2>We are<br>getting married</h2>
+
+<p class="lead">
+With joyful hearts, we invite you
+to celebrate the beginning of our
+forever and share this beautiful
+evening with us.
+</p>
+
+<div class="rule"></div>
+
+<div class="details">
+<div class="detail">
+<strong>Saturday</strong>
+<span>Day</span>
+</div>
+
+<div class="detail">
+<strong>2 January</strong>
+<span>Date</span>
+</div>
+
+<div class="detail">
+<strong>7:00 PM</strong>
+<span>Time</span>
+</div>
+
+<div class="detail">
+<strong>Opera Hall</strong>
+<span>Venue</span>
+</div>
+</div>
+
+<div class="countdown">
+<div class="count">
+<strong id="days">00</strong>
+<span>Days</span>
+</div>
+<div class="count">
+<strong id="hours">00</strong>
+<span>Hours</span>
+</div>
+<div class="count">
+<strong id="minutes">00</strong>
+<span>Minutes</span>
+</div>
+<div class="count">
+<strong id="seconds">00</strong>
+<span>Seconds</span>
+</div>
+</div>
+</section>
+
+<!-- STORY -->
+<section class="section story center reveal">
+<div class="eyebrow">Our Story</div>
+<h2>Two hearts.<br>One journey.</h2>
+
+<p class="lead">
+Some moments become memories.
+Some memories become a lifetime.
+And this is where our forever begins.
+</p>
+
+<div class="quote">
+“And suddenly you know:
+this is the beginning of something beautiful.”
+</div>
+</section>
+
+<!-- WEDDING DAY -->
+<section class="section reveal">
+<div class="eyebrow">The Celebration</div>
+<h2>Our Wedding<br>Day</h2>
+
+<div class="timeline">
+<div class="event">
+<div class="event-time">06:30 PM</div>
+<div class="event-title">Guest Arrival</div>
+<p class="event-text">
+Welcome, greetings and a little
+time to settle in before the
+celebration begins.
+</p>
+</div>
+
+<div class="event">
+<div class="event-time">07:00 PM</div>
+<div class="event-title">Wedding Ceremony</div>
+<p class="event-text">
+The moment we begin our journey
+together, surrounded by the
+people we love.
+</p>
+</div>
+
+<div class="event">
+<div class="event-time">08:00 PM</div>
+<div class="event-title">Dinner & Celebration</div>
+<p class="event-text">
+Good food, dancing and beautiful
+memories with our favorite people.
+</p>
+</div>
+</div>
+</section>
+
+<!-- LOCATION -->
+<section class="section center reveal">
+<div class="eyebrow">Location</div>
+<h2>Getting<br>There</h2>
+
+<div class="location-card">
+<div class="location-icon">⌖</div>
+
+<div class="venue" id="venue">
+Opera Hall
+</div>
+
+<div class="address" id="address">
+Aero Sport Club<br>
+Cairo International Airport<br>
+Cairo, Egypt
+</div>
+
+<a class="map-button"
+id="mapButton"
+href="https://www.google.com/maps/search/?api=1&query=Opera+Hall+Aero+Sport+Club+Cairo+Airport+Egypt"
+target="_blank"
+rel="noopener noreferrer">
+Open in Google Maps
+</a>
+</div>
+</section>
+
+<!-- RSVP -->
+<section class="section reveal">
+<div class="center">
+<div class="eyebrow">RSVP</div>
+<h2>Will you<br>join us?</h2>
+
+<p class="lead">
+Please leave your name and a
+little message for Ahmed & Walaa.
+</p>
+</div>
+
+<form class="form" id="rsvpForm">
+<div class="field">
+<label for="guestName">Your Name</label>
+<input id="guestName" type="text"
+placeholder="Your full name"
+autocomplete="name" maxlength="80" required>
+</div>
+
+<div class="field">
+<label for="guestMessage">Your Message</label>
+<textarea id="guestMessage"
+placeholder="Write your congratulations..."
+maxlength="500" required></textarea>
+</div>
+
+<button class="submit" type="submit">
+Save Response
+</button>
+</form>
+
+<div class="success" id="success">
+✓ Response Saved
+<br>
+Thank you for celebrating
+with Ahmed & Walaa.
+</div>
+
+<div class="guestbook" id="guestbook"></div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="eyebrow">Come Celebrate</div>
+
+<div class="footer-names">
+Ahmed<br>&<br>Walaa
+</div>
+
+<p class="footer-text">
+One love.<br>
+One life.<br>
+One beautiful beginning.
+</p>
+
+<button class="back" id="backButton" type="button">
+Back to Invitation
+</button>
+</footer>
+
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
 
-// ==================== بيانات الأذكار ====================
-const azkar = {
-morning: [
-{ text:`أَصبَحْنا على فِطرةِ الإسلامِ، وكَلِمةِ الإخلاصِ، ودِينِ نَبيِّنا محمَّدٍ صلَّى اللهُ عليه وسلَّمَ، ومِلَّةِ أبِينا إبراهيمَ، حَنيفًا مُسلِمًا، وما كان مِنَ المُشرِكينَ.`, count:1 },
-{ text:`رضيتُ باللهِ ربًّا وبالإسلامِ دينًا وبمحمَّدٍ صلَّى اللهُ عليه وسلَّم نبيًّا.`, count:3 },
-{ text:`لا إلهَ إلَّا اللهُ وحدَه لا شريك له له المُلكُ وله الحمدُ وهو على كلِّ شيءٍ قديرٌ.`, count:10 },
-{ text:`اللهمَّ إني أسألُك علمًا نافعًا ورزقًا طيبًا وعملًا متقبلًا.`, count:1 },
-{ text:`بسمِ اللَّهِ الَّذي لا يضرُّ معَ اسمِهِ شيءٌ في الأرضِ ولا في السَّماءِ وَهوَ السَّميعُ العليمُ.`, count:3 },
-{ text:`اللهمَّ بك أصبحنا وبك أمسينا وبك نحيا وبك نموتُ وإليك النُّشورُ.`, count:1 },
-{ text:`اللَّهُمَّ أنتَ ربِّي لا إلَهَ إلَّا أنتَ خلَقتَني وأَنا عبدُكَ وأَنا على عَهْدِكَ ووعدِكَ ما استطَعتُ أعوذُ بِكَ من شرِّ ما صنعتُ أبوءُ لَكَ بنعمتِكَ عليَّ وأبوءُ بذَنبي فاغفِر لي فإنَّهُ لا يغفرُ الذُّنوبَ إلَّا أنتَ.`, count:1 },
-{ text:`أصبَحْنا وأصبَح المُلْكُ للهِ والحمدُ للهِ أسأَلُكَ مِن خيرِ هذا اليومِ ومِن خيرِ ما فيه وخيرِ ما بعدَه وأعوذُ بكَ مِن الكسَلِ والهرَمِ وسوءِ العُمُرِ وفتنةِ الدَّجَّالِ وعذابِ القبرِ.`, count:1 },
-{ text:`يا حيُّ يا قيومُ برحمتك أستغيثُ وأَصلِحْ لي شأني كلَّه ولا تَكِلْني إلى نفسي طرفَةَ عَينٍ أبدًا.`, count:1 },
-{ text:`اللهمَّ إني أسألُك العفوَ والعافيةَ في الدنيا والآخرةِ اللهمَّ إني أسألُك العفوَ والعافيةَ في دِيني ودنيايَ وأهلي ومالي اللهمَّ استُرْ عوراتي وآمِنْ روعاتي واحفظني من بين يدي ومن خلفي وعن يميني وعن شمالي ومن فوقي وأعوذُ بك أن أُغْتَالَ من تحتي.`, count:1 },
-{ text:`حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ.`, count:7 },
-{ text:`سُبْحَانَ اللهِ عَدَدَ خَلْقِهِ، سُبْحَانَ اللهِ رِضَا نَفْسِهِ، سُبْحَانَ اللهِ زِنَةَ عَرْشِهِ، سُبْحَانَ اللهِ مِدَادَ كَلِمَاتِهِ.`, count:3 },
-{ text:`اللهمَّ فاطرَ السمواتِ والأرضِ عالمَ الغيبِ والشهادةِ لا إلهَ إلَّا أنتَ ربَّ كلِّ شيءٍ ومَليكَه أعوذُ بك من شرِّ نفسي ومن شرِّ الشيطانِ وشرَكِه وأنْ أقترفَ على نفسي سوءًا أو أجرَّهُ إلى مسلمٍ.`, count:1 },
-{ text:`اللَّهُمَّ إنِّي أصبَحتُ أُشهِدُك وأُشهِدُ حَمَلةَ عَرشِكَ ومَلائِكَتَك وجميعَ خَلقِكَ بأنَّك أنتَ اللهُ لا إلهَ إلَّا أنتَ وحدكَ لا شريكَ لكَ وأنَّ مُحمَّدًا عبدُكَ ورسولُكَ.`, count:4 },
-{ text:`سبحان اللهِ والحمدُ للهِ ولا إلهَ إلَّا اللهُ واللهُ أكبرُ ولا حولَ ولا قوَّةَ إلَّا باللهِ العليِّ العظيمِ.`, count:100 },
-{ text:`سُبْحَانَ اللهِ وبِحَمْدِهِ.`, count:100 },
-{ text:`اللهمَّ عافني في بدَني اللهمَّ عافني في سمعي اللهمَّ عافني في بصري لا إلهَ إلا أنتَ اللهمَّ إني أعوذُ بك من الكفرِ والفقرِ وأعوذُ بك من عذابِ القبرِ لا إلهَ إلا أنتَ.`, count:3 }
-],
-evening: [
-{ text:`أمسَيْنا على فِطرةِ الإسلامِ وعلى كَلِمةِ الإخلاصِ وعلى دينِ نبيِّنا محمَّدٍ صلَّى اللهُ عليه وسلَّم وعلى مِلَّةِ أبينا إبراهيمَ حنيفًا مسلمًا وما كان مِنَ المشركينَ.`, count:1 },
-{ text:`رضيتُ باللهِ ربًّا وبالإسلامِ دينًا وبمحمَّدٍ صلَّى اللهُ عليه وسلَّم نبيًّا.`, count:3 },
-{ text:`اللهم بكَ أمْسَينَا وبكَ أصبحنا وبكَ نحيا وبكَ نموتُ وإليكَ المصيرُ.`, count:1 },
-{ text:`يا حيُّ يا قيومُ برحمتك أستغيثُ وأَصلِحْ لي شأني كلَّه ولا تَكِلْني إلى نفسي طرفَةَ عَينٍ أبدًا.`, count:1 },
-{ text:`اللَّهُمَّ أنتَ ربِّي لا إلَهَ إلَّا أنتَ خلَقتَني وأَنا عبدُكَ وأَنا على عَهْدِكَ ووعدِكَ ما استطَعتُ أعوذُ بِكَ من شرِّ ما صنعتُ أبوءُ لَكَ بنعمتِكَ عليَّ وأبوءُ بذَنبي فاغفِر لي فإنَّهُ لا يغفرُ الذُّنوبَ إلَّا أنتَ.`, count:1 },
-{ text:`أَمْسَيْنَا وَأَمْسَى المُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ لا إلَهَ إلَّا اللَّهُ وَحْدَهُ لا شَرِيكَ له له المُلْكُ وَلَهُ الحَمْدُ وَهو علَى كُلِّ شيءٍ قَدِيرٌ اللَّهُمَّ أَسْأَلُكَ خَيْرَ هذِه اللَّيْلَةِ وَأَعُوذُ بكَ مِن شَرِّ هذِه اللَّيْلَةِ وَشَرِّ ما بَعْدَهَا اللَّهُمَّ إنِّي أَعُوذُ بكَ مِنَ الكَسَلِ وَسُوءِ الكِبَرِ اللَّهُمَّ إنِّي أَعُوذُ بكَ مِنَ عَذَابٍ في النَّارِ وَعَذَابٍ في القَبْرِ.`, count:1 },
-{ text:`اللهمَّ إني أسألُك العفوَ والعافيةَ في الدنيا والآخرةِ اللهمَّ إني أسألُك العفوَ والعافيةَ في دِيني ودنيايَ وأهلي ومالي اللهمَّ استُرْ عوراتي وآمِنْ روعاتي واحفظني من بين يدي ومن خلفي وعن يميني وعن شمالي ومن فوقي وأعوذُ بك أن أُغْتَالَ من تحتي.`, count:1 },
-{ text:`بسمِ اللَّهِ الَّذي لا يضرُّ معَ اسمِهِ شيءٌ في الأرضِ ولا في السَّماءِ وَهوَ السَّميعُ العليمُ.`, count:3 },
-{ text:`أعوذُ بكلماتِ اللهِ التَّامَّاتِ مِن شرِّ ما خلَق.`, count:3 },
-{ text:`حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ.`, count:7 },
-{ text:`اللَّهُمَّ إنِّي أمسيتُ أُشهِدُك وأُشهِدُ حَمَلةَ عَرشِكَ ومَلائِكَتَك وجميعَ خَلقِكَ بأنَّك أنتَ اللهُ لا إلهَ إلَّا أنتَ وحدكَ لا شريكَ لكَ وأنَّ مُحمَّدًا عبدُكَ ورسولُكَ.`, count:4 },
-{ text:`سبحان اللهِ والحمدُ للهِ ولا إلهَ إلَّا اللهُ واللهُ أكبرُ ولا حولَ ولا قوَّةَ إلَّا باللهِ العليِّ العظيمِ.`, count:100 }
-]
+/* =========================================
+   WEDDING SETTINGS
+========================================= */
+
+const WEDDING = {
+  date: "2027-01-02T19:00:00+02:00",
+  venue: "Opera Hall",
+  address: "Aero Sport Club, Cairo International Airport, Cairo, Egypt",
+  maps: "https://www.google.com/maps/search/?api=1&query=Opera+Hall+Aero+Sport+Club+Cairo+Airport+Egypt"
 };
 
-// ==================== عرض الأذكار ====================
-let current="morning";
 
-function loadAzkar(type){
-current=type;
-const container=document.getElementById("content");
-container.innerHTML="";
-azkar[type].forEach((item,i)=>{
-let saved=localStorage.getItem(type+i);
-let value=saved?parseInt(saved):item.count;
-let div=document.createElement("div");
-div.className="zekr";
-div.innerHTML=`
-<div>${item.text}</div>
-<div class="counter">
-<button onclick="decrease('${type}',${i})">تسبيح</button>
-<span class="count" id="c-${type}-${i}">${value}</span>
-<button onclick="resetOne('${type}',${i},${item.count})">إعادة</button>
-</div>
-`;
-container.appendChild(div);
+/* =========================================
+   COVER
+========================================= */
+
+const cover = document.getElementById("cover");
+const openButton = document.getElementById("openInvitation");
+
+openButton.addEventListener("click", () => {
+  cover.classList.add("opened");
+
+  setTimeout(() => {
+    document.querySelectorAll(".reveal").forEach((element, index) => {
+      setTimeout(() => {
+        element.classList.add("visible");
+      }, index * 100);
+    });
+
+    document.querySelectorAll(".section")[0].scrollIntoView({
+      behavior: "smooth"
+    });
+
+  }, 350);
 });
+
+
+/* =========================================
+   COUNTDOWN
+========================================= */
+
+function pad(number) {
+  return String(Math.max(0, number)).padStart(2, "0");
 }
 
-function decrease(type,i){
-let el=document.getElementById("c-"+type+"-"+i);
-let val=parseInt(el.innerText);
-if(val>0){val--; el.innerText=val; localStorage.setItem(type+i,val);
-if(val===0){el.classList.add("done");}}
+function updateCountdown() {
+
+  const target = new Date(WEDDING.date).getTime();
+  const now = Date.now();
+
+  let difference = Math.max(0, target - now);
+
+  const days = Math.floor(difference / 86400000);
+  const hours = Math.floor(difference / 3600000) % 24;
+  const minutes = Math.floor(difference / 60000) % 60;
+  const seconds = Math.floor(difference / 1000) % 60;
+
+  document.getElementById("days").textContent = pad(days);
+  document.getElementById("hours").textContent = pad(hours);
+  document.getElementById("minutes").textContent = pad(minutes);
+  document.getElementById("seconds").textContent = pad(seconds);
 }
 
-function resetOne(type,i,count){
-localStorage.setItem(type+i,count);
-loadAzkar(type);
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+
+/* =========================================
+   SCROLL REVEAL
+========================================= */
+
+const revealElements = document.querySelectorAll(".reveal");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+    }
+  });
+}, {
+  threshold: .12
+});
+
+revealElements.forEach(element => {
+  observer.observe(element);
+});
+
+
+/* =========================================
+   GUESTBOOK
+========================================= */
+
+const STORAGE_KEY = "ahmed_walaa_wedding_purple";
+
+function getMessages() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
+  } catch(error) {
+    return [];
+  }
 }
 
-function resetAll(){localStorage.clear(); loadAzkar(current);}
-loadAzkar("morning");
+function saveMessages(messages) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+  } catch(error) {
+    console.warn("Storage unavailable.");
+  }
+}
 
-// ==================== نجوم متحركة Canvas ====================
-const canvas=document.getElementById("stars");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-const ctx=canvas.getContext("2d");
-let stars=[];
-for(let i=0;i<200;i++){
-    stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.5+0.5, d:Math.random()*0.5});
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(text) {
+  return String(text).replace(/[&<>"']/g, character => {
+    const map = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    };
+    return map[character];
+  });
 }
-function drawStars(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle="white";
-    ctx.shadowColor="white";
-    ctx.shadowBlur=5;
-    stars.forEach(s=>{
-        ctx.beginPath();
-        ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-        ctx.fill();
-    });
+
+
+/* =========================================
+   GUESTBOOK RENDER
+========================================= */
+
+function renderGuestbook() {
+
+  const guestbook = document.getElementById("guestbook");
+  const messages = getMessages();
+
+  if (messages.length === 0) {
+    guestbook.innerHTML = "";
+    return;
+  }
+
+  guestbook.innerHTML = messages.slice(0, 30).map(item => `
+    <div class="guest">
+      <div class="guest-name">
+        ${escapeHTML(item.name)}
+      </div>
+      <div class="guest-text">
+        ${escapeHTML(item.message)}
+      </div>
+    </div>
+  `).join("");
 }
-function moveStars(){
-    stars.forEach(s=>{
-        s.y += s.d;
-        if(s.y>canvas.height){ s.y=0; s.x=Math.random()*canvas.width;}
-    });
+
+renderGuestbook();
+
+
+/* =========================================
+   RSVP
+========================================= */
+
+const form = document.getElementById("rsvpForm");
+const success = document.getElementById("success");
+const toast = document.getElementById("toast");
+
+form.addEventListener("submit", event => {
+
+  event.preventDefault();
+
+  const name = document.getElementById("guestName").value.trim();
+  const message = document.getElementById("guestMessage").value.trim();
+
+  if (!name || !message) {
+    return;
+  }
+
+  const messages = getMessages();
+
+  messages.unshift({
+    name: name,
+    message: message,
+    date: new Date().toISOString()
+  });
+
+  saveMessages(messages.slice(0, 30));
+
+  form.reset();
+
+  success.classList.add("show");
+
+  renderGuestbook();
+
+  showToast("Response saved ✓");
+});
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+function showToast(text) {
+
+  toast.textContent = text;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2200);
 }
-function animateStars(){ drawStars(); moveStars(); requestAnimationFrame(animateStars);}
-animateStars();
-window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
+
+
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+document.getElementById("backButton").addEventListener("click", () => {
+  document.getElementById("cover").scrollIntoView({
+    behavior: "smooth"
+  });
+});
+
+
+/* =========================================
+   TOUCH FEEDBACK
+========================================= */
+
+document.querySelectorAll("button").forEach(button => {
+
+  button.addEventListener("touchstart", () => {
+    button.style.transform = "scale(.98)";
+  }, {passive: true});
+
+  button.addEventListener("touchend", () => {
+    button.style.transform = "";
+  }, {passive: true});
+
+});
+
+
+/* =========================================
+   VENUE SETTINGS
+========================================= */
+
+document.getElementById("venue").textContent = WEDDING.venue;
+
+document.getElementById("address").innerHTML =
+  "Aero Sport Club<br>Cairo International Airport<br>Cairo, Egypt";
+
+document.getElementById("mapButton").href = WEDDING.maps;
+
 </script>
 
 </body>
